@@ -148,8 +148,18 @@ body {
     letter-spacing: .25em;
     /* Extremely wide tracking */
     text-transform: uppercase;
-    transition: color .3s, transform 0.3s;
-    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.nav-links a.active-link,
+.nav-links a.nav-active,
+.nav-links a:hover {
+    color: var(--gold) !important;
+}
+
+transition: color .3s,
+transform 0.3s;
+display: inline-block;
 }
 
 .nav-links a:hover {

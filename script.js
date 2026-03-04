@@ -73,7 +73,7 @@ window.addEventListener('scroll', () => {
 
 // ── Active nav link highlight ──
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
+const navLinks = document.querySelectorAll('.nav-links a, .mmlink');
 
 const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -90,7 +90,7 @@ sections.forEach(s => sectionObserver.observe(s));
 
 // Add active link style dynamically
 const style = document.createElement('style');
-style.textContent = `.nav-links a.active-link { color: var(--gold) !important; }
+style.textContent = `.nav-links a.active-link, .mmlink.active-link { color: var(--gold) !important; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }`;
 document.head.appendChild(style);
 

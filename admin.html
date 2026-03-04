@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Vignesh Chandrashekar</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #f0c46a;
+            --gold-dark: #9a7230;
+            --bg: #0c0c0c;
+            --bg2: #111111;
+            --surface: #181818;
+            --surface2: #1f1f1f;
+            --border: rgba(201, 168, 76, 0.18);
+            --text: #e8e4dc;
+            --dim: #8a8580;
+            --red: #e05252;
+            --green: #52a052;
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Inter', system-ui, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+        }
+
+        /* ── GRAIN ── */
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        /* ══════════════════════════════
+       LOGIN SCREEN
+    ══════════════════════════════ */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201, 168, 76, 0.05) 0%, transparent 70%),
+                var(--bg);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            padding: 2rem;
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .login-logo .monogram {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            display: block;
+            line-height: 1;
+        }
+
+        .login-logo p {
+            font-size: .72rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-top: .5rem;
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 2.5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold-dark));
+        }
+
+        .login-card h2 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: .4rem;
+            text-align: center;
+        }
+
+        .login-card .sub {
+            font-size: .78rem;
+            color: var(--dim);
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: .05em;
+        }
+
+        .field {
+            margin-bottom: 1.5rem;
+        }
+
+        .field label {
+            display: block;
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .5rem;
+        }
+
+        .field input {
+            width: 100%;
+            background: var(--surface2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: .95rem;
+            padding: .85rem 1rem;
+            border-radius: 3px;
+            outline: none;
+            transition: border-color .3s;
+        }
+
+        .field input:focus {
+            border-color: var(--gold);
+        }
+
+        /* ── Show / hide toggle ── */
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap input {
+            padding-right: 3rem;
+        }
+
+        .btn-eye {
+            position: absolute;
+            right: .75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--dim);
+            font-size: 1.1rem;
+            line-height: 1;
+            transition: color .2s;
+            user-select: none;
+        }
+
+        .btn-eye:hover {
+            color: var(--gold);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: .9rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            color: #080800;
+            font-family: var(--font-sans);
+            font-size: .85rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            transition: filter .3s, transform .3s;
+            margin-top: .5rem;
+        }
+
+        .btn-login:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .login-error {
+            background: rgba(224, 82, 82, 0.12);
+            border: 1px solid rgba(224, 82, 82, 0.3);
+            color: var(--red);
+            font-size: .82rem;
+            padding: .75rem 1rem;
+            border-radius: 3px;
+            margin-bottom: 1.2rem;
+            display: none;
+            text-align: center;
+        }
+
+        /* ══════════════════════════════
+       ADMIN DASHBOARD
+    ══════════════════════════════ */
+        #dashboard {
+            display: none;
+        }
+
+        /* Topbar */
+        .admin-topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .admin-brand {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .admin-brand .logo {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--gold);
+        }
+
+        .admin-brand .badge {
+            font-size: .65rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            background: rgba(201, 168, 76, 0.12);
+            border: 1px solid var(--border);
+            color: var(--gold);
+            padding: .2rem .6rem;
+            border-radius: 2px;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-user span {
+            font-size: .82rem;
+            color: var(--dim);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid rgba(224, 82, 82, 0.4);
+            color: var(--red);
+            font-size: .78rem;
+            font-weight: 500;
+            padding: .45rem 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            letter-spacing: .08em;
+            transition: background .3s;
+        }
+
+        .btn-logout:hover {
+            background: rgba(224, 82, 82, 0.1);
+        }
+
+        /* Dashboard body */
+        .admin-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+        }
+
+        /* Stats row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.5rem 1.8rem;
+            transition: border-color .3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+        }
+
+        .stat-card .s-label {
+            font-size: .7rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+
+        .stat-card .s-value {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            color: var(--gold);
+            line-height: 1.1;
+            margin-top: .3rem;
+        }
+
+        /* Section title */
+        .dash-section-title {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dash-section-title span {
+            font-family: var(--font-sans);
+            font-size: .72rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+
+        /* Toolbar */
+        .dash-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            background: var(--surface2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            padding: .55rem 1rem;
+            border-radius: 3px;
+            font-family: var(--font-sans);
+            font-size: .85rem;
+            outline: none;
+            width: 260px;
+            transition: border-color .3s;
+        }
+
+        .search-box:focus {
+            border-color: var(--gold);
+        }
+
+        .search-box::placeholder {
+            color: var(--dim);
+        }
+
+        .btn-clear {
+            background: transparent;
+            border: 1px solid rgba(224, 82, 82, 0.35);
+            color: var(--red);
+            font-size: .78rem;
+            padding: .5rem 1rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background .3s;
+        }
+
+        .btn-clear:hover {
+            background: rgba(224, 82, 82, 0.1);
+        }
+
+        /* Submissions list — accordion style */
+        .submissions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .submission-card {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            animation: slideIn .25s ease;
+        }
+
+        .submission-card:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* Compact row (always visible) */
+        .sub-row {
+            display: flex;
+            align-items: center;
+            padding: .85rem 1.2rem;
+            gap: 1rem;
+            justify-content: space-between;
+            transition: background .2s;
+        }
+
+        .sub-row:hover {
+            background: rgba(201, 168, 76, 0.04);
+        }
+
+        .sub-row-left {
+            display: flex;
+            align-items: center;
+            gap: .9rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sub-row-right {
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            flex-shrink: 0;
+        }
+
+        .btn-sub-name {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            color: var(--text);
+            text-align: left;
+            transition: color .2s;
+            padding: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 220px;
+        }
+
+        .btn-sub-name:hover {
+            color: var(--gold);
+        }
+
+        .sub-project {
+            font-size: .65rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid var(--border);
+            color: var(--gold);
+            padding: .18rem .6rem;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        .sub-time {
+            font-size: .7rem;
+            color: var(--dim);
+            white-space: nowrap;
+        }
+
+        .sub-chevron {
+            background: none;
+            border: none;
+            color: var(--dim);
+            font-size: .75rem;
+            cursor: pointer;
+            transition: transform .25s, color .2s;
+            line-height: 1;
+            padding: 2px 4px;
+        }
+
+        .sub-chevron:hover {
+            color: var(--gold);
+        }
+
+        .sub-chevron.open {
+            transform: rotate(180deg);
+            color: var(--gold);
+        }
+
+        .btn-del-sub {
+            background: none;
+            border: none;
+            color: rgba(224, 82, 82, .35);
+            font-size: .85rem;
+            cursor: pointer;
+            transition: color .2s;
+            line-height: 1;
+        }
+
+        .btn-del-sub:hover {
+            color: var(--red);
+        }
+
+        /* Expandable details panel */
+        .sub-details {
+            display: none;
+            padding: 1.2rem 1.5rem 1.4rem;
+            background: var(--bg2);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeDown .2s ease;
+        }
+
+        .sub-details.open {
+            display: block;
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: .55rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .d-key {
+            font-size: .68rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            padding-top: .1rem;
+        }
+
+        .d-val {
+            font-size: .88rem;
+            color: var(--dim);
+            word-break: break-word;
+        }
+
+        .d-val a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .d-val a:hover {
+            text-decoration: underline;
+        }
+
+        .detail-message {
+            font-size: .88rem;
+            color: var(--text);
+            line-height: 1.8;
+            padding-top: .9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            white-space: pre-wrap;
+        }
+
+        .detail-message-label {
+            font-size: .68rem;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: .5rem;
+            display: block;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--dim);
+            font-size: .92rem;
+        }
+
+        .empty-state .e-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: .3;
+        }
+
+        .empty-state p {
+            margin-top: .5rem;
+        }
+
+        @media (max-width: 640px) {
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .admin-topbar {
+                padding: .8rem 1rem;
+            }
+
+            .admin-body {
+                padding: 1.5rem 1rem;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grain"></div>
+
+    <!-- ══════ LOGIN ══════ -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <div class="login-logo">
+                <span class="monogram">VC<span style="color:var(--gold)">.</span></span>
+                <p>Admin Panel</p>
+            </div>
+            <div class="login-card">
+                <h2>Secure Access</h2>
+                <p class="sub">Authorised personnel only</p>
+                <div class="login-error" id="loginError">⚠ Invalid credentials. Access denied.</div>
+                <form id="loginForm" autocomplete="off">
+                    <div class="field">
+                        <label for="admin-user">Username</label>
+                        <div class="input-wrap">
+                            <input type="password" id="admin-user" placeholder="Enter username" autocomplete="off" />
+                            <button type="button" class="btn-eye" data-target="admin-user"
+                                title="Show / hide">👁</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="admin-pass">Password</label>
+                        <div class="input-wrap">
+                            <input type="password" id="admin-pass" placeholder="Enter password" autocomplete="off" />
+                            <button type="button" class="btn-eye" data-target="admin-pass"
+                                title="Show / hide">👁</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-login">Login →</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ DASHBOARD ══════ -->
+    <div id="dashboard">
+        <!-- Topbar -->
+        <div class="admin-topbar">
+            <div class="admin-brand">
+                <span class="logo">VC.</span>
+                <span class="badge">Admin</span>
+            </div>
+            <div class="admin-user">
+                <span id="loggedUser"></span>
+                <button class="btn-logout" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-body">
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="s-label">Total Submissions</div>
+                    <div class="s-value" id="statTotal">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="s-label">Latest Project Type</div>
+                    <div class="s-value" id="statLatest" style="font-size:1.2rem;padding-top:.5rem;">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="s-label">Most Recent</div>
+                    <div class="s-value" id="statRecent" style="font-size:1rem;padding-top:.6rem;">—</div>
+                </div>
+            </div>
+
+            <!-- Submissions -->
+            <div class="dash-section-title">
+                Enquiries
+                <span id="countLabel">0 messages</span>
+            </div>
+
+            <div class="dash-toolbar">
+                <input class="search-box" id="searchBox" type="text"
+                    placeholder="🔍  Search by name, email or project…" />
+                <button class="btn-clear" id="clearAllBtn">🗑 Clear All</button>
+            </div>
+
+            <div class="submissions-list" id="submissionsList"></div>
+        </div>
+    </div>
+
+    <script>
+        /* ──────────────────────────────
+           CREDENTIALS
+        ────────────────────────────── */
+        const VALID_USER = 'rocky.dev';
+        const VALID_PASS = 'rocky.dev';
+        const SESSION_KEY = 'vc_admin_session';
+        const DATA_KEY = 'vc_submissions';
+
+        /* ──────────────────────────────
+           DOM refs
+        ────────────────────────────── */
+        const loginScreen = document.getElementById('loginScreen');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+
+        /* ──────────────────────────────
+           AUTH
+        ────────────────────────────── */
+        function isLoggedIn() {
+            return sessionStorage.getItem(SESSION_KEY) === 'authenticated';
+        }
+
+        function showDashboard() {
+            loginScreen.style.display = 'none';
+            dashboard.style.display = 'block';
+            document.getElementById('loggedUser').textContent = '👤 ' + VALID_USER;
+            renderDashboard();
+        }
+
+        function showLogin() {
+            sessionStorage.removeItem(SESSION_KEY);
+            loginScreen.style.display = 'flex';
+            dashboard.style.display = 'none';
+        }
+
+        // Auto-restore session
+        if (isLoggedIn()) showDashboard();
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('admin-user').value.trim();
+            const pass = document.getElementById('admin-pass').value.trim();
+
+            if (user === VALID_USER && pass === VALID_PASS) {
+                sessionStorage.setItem(SESSION_KEY, 'authenticated');
+                loginError.style.display = 'none';
+                showDashboard();
+            } else {
+                loginError.style.display = 'block';
+                document.getElementById('admin-pass').value = '';
+                // Shake animation
+                loginError.style.animation = 'none';
+                void loginError.offsetWidth;
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', showLogin);
+
+        /* ──────────────────────────────
+           DATA HELPERS
+        ────────────────────────────── */
+        function getSubmissions() {
+            return JSON.parse(localStorage.getItem(DATA_KEY) || '[]');
+        }
+        function saveSubmissions(arr) {
+            localStorage.setItem(DATA_KEY, JSON.stringify(arr));
+        }
+
+        /* ──────────────────────────────
+           RENDER DASHBOARD
+        ────────────────────────────── */
+        function renderDashboard(filter = '') {
+            const all = getSubmissions();
+            const query = filter.toLowerCase();
+            const list = query
+                ? all.filter(s =>
+                    s.name.toLowerCase().includes(query) ||
+                    s.email.toLowerCase().includes(query) ||
+                    s.project.toLowerCase().includes(query) ||
+                    s.message.toLowerCase().includes(query)
+                )
+                : all;
+
+            // Stats
+            document.getElementById('statTotal').textContent = all.length;
+            document.getElementById('statLatest').textContent = all[0]?.project || '—';
+            document.getElementById('statRecent').textContent = all[0]?.time || '—';
+            document.getElementById('countLabel').textContent =
+                `${list.length} message${list.length !== 1 ? 's' : ''}`;
+
+            // List
+            const container = document.getElementById('submissionsList');
+            container.innerHTML = '';
+
+            if (list.length === 0) {
+                container.innerHTML = `
+        <div class="empty-state">
+          <div class="e-icon">📭</div>
+          <strong>${all.length === 0 ? 'No enquiries yet.' : 'No results match your search.'}</strong>
+          <p>${all.length === 0 ? 'Submissions from the contact form will appear here.' : 'Try a different search term.'}</p>
+        </div>`;
+                return;
+            }
+
+            list.forEach(s => {
+                const name = esc(s.name) || '<em style="color:var(--dim)">Anonymous</em>';
+                const card = document.createElement('div');
+                card.className = 'submission-card';
+                card.dataset.id = s.id;
+                card.innerHTML = `
+                  <!-- Compact row -->
+                  <div class="sub-row">
+                    <div class="sub-row-left">
+                      <button class="btn-sub-name" title="Click to expand">${name}</button>
+                      <span class="sub-project">${esc(s.project) || 'General'}</span>
+                    </div>
+                    <div class="sub-row-right">
+                      <span class="sub-time">${esc(s.time)}</span>
+                      <button class="sub-chevron" title="Expand">▼</button>
+                      <button class="btn-del-sub" title="Delete" data-id="${s.id}">✕</button>
+                    </div>
+                  </div>
+                  <!-- Expandable details -->
+                  <div class="sub-details">
+                    <div class="detail-grid">
+                      <span class="d-key">Name</span>
+                      <span class="d-val">${name}</span>
+                      <span class="d-key">Email</span>
+                      <span class="d-val"><a href="mailto:${esc(s.email)}">${esc(s.email)}</a></span>
+                      <span class="d-key">Project</span>
+                      <span class="d-val">${esc(s.project) || '—'}</span>
+                      <span class="d-key">Received</span>
+                      <span class="d-val">${esc(s.time)}</span>
+                    </div>
+                    <span class="detail-message-label">Message</span>
+                    <div class="detail-message">${esc(s.message)}</div>
+                  </div>`;
+
+                // Toggle expand on name click or chevron click
+                const toggle = () => {
+                    const det = card.querySelector('.sub-details');
+                    const chev = card.querySelector('.sub-chevron');
+                    det.classList.toggle('open');
+                    chev.classList.toggle('open');
+                };
+                card.querySelector('.btn-sub-name').addEventListener('click', toggle);
+                card.querySelector('.sub-chevron').addEventListener('click', toggle);
+
+                // Delete
+                card.querySelector('.btn-del-sub').addEventListener('click', () => {
+                    const id = parseInt(card.querySelector('.btn-del-sub').dataset.id);
+                    const updated = getSubmissions().filter(s => s.id !== id);
+                    saveSubmissions(updated);
+                    renderDashboard(document.getElementById('searchBox').value);
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // Escape HTML to prevent XSS
+        function esc(str) {
+            return String(str ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // Search
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            renderDashboard(e.target.value);
+        });
+
+        // Clear all
+        document.getElementById('clearAllBtn').addEventListener('click', () => {
+            if (confirm('Delete ALL submissions? This cannot be undone.')) {
+                saveSubmissions([]);
+                renderDashboard();
+            }
+        });
+
+        // Show / hide toggles
+        document.querySelectorAll('.btn-eye').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById(btn.dataset.target);
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                btn.textContent = show ? '🙈' : '👁';
+            });
+        });
+    </script>
+</body>
+
+</html>

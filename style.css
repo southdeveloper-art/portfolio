@@ -1693,3 +1693,11 @@ footer p {
         font-size: 1rem;
     }
 }
+
+/* ── Footer Background ── */
+footer {
+    background: #050505 !important;
+    padding: 6rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(201, 168, 76, 0.05);
+}

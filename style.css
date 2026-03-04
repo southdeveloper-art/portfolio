@@ -155,15 +155,6 @@ body {
 .nav-links a.nav-active,
 .nav-links a:hover {
     color: var(--gold) !important;
-}
-
-transition: color .3s,
-transform 0.3s;
-display: inline-block;
-}
-
-.nav-links a:hover {
-    color: #fff;
     transform: translateY(-1px);
 }
 

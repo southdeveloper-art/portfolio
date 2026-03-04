@@ -1606,32 +1606,22 @@ footer p {
 
 /* ── Custom Floating Signature ── */
 .footer-signature {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 100000;
-    color: var(--text-dim);
-    font-size: 0.85rem;
-    font-family: var(--font-sans);
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    pointer-events: auto;
-    background: rgba(10, 10, 10, 0.85);
-    padding: 0.5rem 1.2rem;
-    border-radius: 50px;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    padding: 0.5rem 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    text-decoration: none;
+    margin-top: 2rem;
     transition: all 0.3s ease;
 }
 
 .footer-signature:hover {
-    background: rgba(20, 20, 20, 1);
-    border-color: rgba(201, 168, 76, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--gold-dark);
+    transform: translateY(-2px);
 }
 
 .footer-signature .heart {
@@ -1680,11 +1670,23 @@ footer p {
 }
 
 @media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.2rem;
+        line-height: 1.2;
+    }
+
+    .hero-content {
+        padding-top: 4rem;
+    }
+
+    .portrait-wrapper {
+        width: 280px;
+        height: 380px;
+    }
+
     .footer-signature {
-        bottom: 1rem;
-        right: 1rem;
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
+        margin-top: 1.5rem;
+        padding: 0.4rem 1rem;
     }
 
     .footer-signature .name {

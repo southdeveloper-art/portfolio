@@ -771,41 +771,42 @@ body {
 }
 
 /* Portfolio bg colours */
-.bg1 {
-    background: linear-gradient(135deg, #1a0a00 40%, #3d1f00);
+.port-fashion {
+    background-image: url('assets/images/DSC07826.jpg.jpeg');
 }
 
-.bg2 {
-    background: linear-gradient(160deg, #0f0800 30%, #2a1500);
+.port-interior {
+    background-image: url('assets/images/DSC01373.jpg.jpeg');
 }
 
-.bg3 {
-    background: linear-gradient(135deg, #080d0f 40%, #0f2030);
+.port-food1 {
+    background-image: url('assets/images/bourbon cafe.png');
 }
 
-.bg4 {
-    background: linear-gradient(135deg, #0f0800 40%, #2e1600);
+.port-food2 {
+    background-image: url('assets/images/boyrbon cafe.avif');
 }
 
-.bg5 {
-    background: linear-gradient(135deg, #080f0a 40%, #0a2010);
+.port-product {
+    background-image: url('assets/images/DSC08139 copy 3.jpg.jpeg');
 }
 
-.bg6 {
-    background: linear-gradient(135deg, #050f08 40%, #0e2518);
+.port-nature {
+    background-image: url('assets/images/DSC_5113-(1).jpg.jpeg');
 }
 
-.bg7 {
-    background: linear-gradient(160deg, #0a0a14 30%, #15153a);
+.port-arch {
+    background-image: url('assets/images/Untitled_Panorama-1.jpg.jpeg');
 }
 
-.bg8 {
-    background: linear-gradient(135deg, #0f0c08 40%, #2a2010);
+.port-video {
+    background-image: url('assets/images/43f906f2-8302-4e8f-8fe2-3dd57f3c3130.png');
 }
 
-.bg9 {
-    background: linear-gradient(135deg, #0f0800 40%, #30150a);
+.port-portrait {
+    background-image: url('assets/images/DSC00062 (1) copy 3.jpg.jpeg');
 }
+
 
 /* ── Case Study (Featured Project) ── */
 .case-study {

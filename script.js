@@ -49,7 +49,7 @@ function animateTyping(el) {
     el.style.opacity = '1';
 
     let charIdx = 0;
-    const speed = 35; // ms per character
+    const speed = 75; // ms per character
 
     function type() {
         if (charIdx < text.length) {

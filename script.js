@@ -44,29 +44,60 @@ const typingEls = document.querySelectorAll('.type-text');
 
 function animateTyping(el) {
     const originalHTML = el.innerHTML;
-    const text = el.innerText;
+    const nodes = Array.from(el.childNodes);
     el.innerHTML = '';
     el.style.opacity = '1';
 
-    let charIdx = 0;
-    const speed = 75; // ms per character
+    let currentNodeIdx = 0;
+    let currentCharIdx = 0;
+    const speed = 75;
 
     function type() {
-        if (charIdx < text.length) {
-            // Simplified for now: just text. If tags are needed, 
-            // a more complex character wrapper approach is better.
-            // For the user's sleek headers, we'll use character-by-character reveal
-            el.textContent += text[charIdx];
-            charIdx++;
-            setTimeout(type, speed);
+        if (currentNodeIdx < nodes.length) {
+            const node = nodes[currentNodeIdx];
+
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (currentCharIdx < node.textContent.length) {
+                    el.appendChild(document.createTextNode(node.textContent[currentCharIdx]));
+                    currentCharIdx++;
+                    setTimeout(type, speed);
+                } else {
+                    currentNodeIdx++;
+                    currentCharIdx = 0;
+                    type();
+                }
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                let currentSpan = el.querySelector(`[data-typing-id="${currentNodeIdx}"]`);
+                if (!currentSpan) {
+                    currentSpan = node.cloneNode(true);
+                    currentSpan.innerHTML = '';
+                    currentSpan.setAttribute('data-typing-id', currentNodeIdx);
+                    el.appendChild(currentSpan);
+                }
+
+                const nodeText = node.innerText;
+                if (currentCharIdx < nodeText.length) {
+                    currentSpan.textContent += nodeText[currentCharIdx];
+                    currentCharIdx++;
+                    setTimeout(type, speed);
+                } else {
+                    currentNodeIdx++;
+                    currentCharIdx = 0;
+                    type();
+                }
+            } else {
+                // Skip other types like comments
+                currentNodeIdx++;
+                type();
+            }
         } else {
-            // Restore original HTML for styling (gold, italics etc) once typed
             el.innerHTML = originalHTML;
             el.classList.add('typing-done');
         }
     }
     type();
 }
+
 
 const typingObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

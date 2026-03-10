@@ -725,9 +725,9 @@ body {
     overflow: hidden;
     border-radius: 3px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     transition: transform .4s;
 }
 
@@ -772,40 +772,41 @@ body {
 
 /* Portfolio bg colours */
 .port-fashion {
-    background-image: url('assets/images/DSC07826.jpg.jpeg');
+    background-image: url('assets/images/port_fashion.jpg');
 }
 
 .port-interior {
-    background-image: url('assets/images/DSC01373.jpg.jpeg');
+    background-image: url('assets/images/port_interior.jpg');
 }
 
 .port-food1 {
-    background-image: url('assets/images/bourbon cafe.png');
+    background-image: url('assets/images/bourbon_cafe.png');
 }
 
 .port-food2 {
-    background-image: url('assets/images/boyrbon cafe.avif');
+    background-image: url('assets/images/bourbon_cafe.avif');
 }
 
 .port-product {
-    background-image: url('assets/images/DSC08139 copy 3.jpg.jpeg');
+    background-image: url('assets/images/port_product.jpg');
 }
 
 .port-nature {
-    background-image: url('assets/images/DSC_5113-(1).jpg.jpeg');
+    background-image: url('assets/images/port_nature.jpg');
 }
 
 .port-arch {
-    background-image: url('assets/images/Untitled_Panorama-1.jpg.jpeg');
+    background-image: url('assets/images/port_arch.jpg');
 }
 
 .port-video {
-    background-image: url('assets/images/43f906f2-8302-4e8f-8fe2-3dd57f3c3130.png');
+    background-image: url('assets/images/port_video.png');
 }
 
 .port-portrait {
-    background-image: url('assets/images/DSC00062 (1) copy 3.jpg.jpeg');
+    background-image: url('assets/images/port_portrait.jpg');
 }
+
 
 
 /* ── Case Study (Featured Project) ── */

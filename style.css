@@ -24,8 +24,17 @@
     --border: rgba(201, 168, 76, 0.15);
     --text: #e8e4dc;
     --text-dim: #9a9590;
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+.ampersand {
+    font-family: 'Satisfy', cursive;
+    font-weight: 400;
+    font-size: 1.1em;
+    font-style: normal;
+    margin: 0 0.1em;
+    color: var(--text);
 }
 
 html {
@@ -261,18 +270,24 @@ body {
 .hero-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 80% 80% at 20% 80%, rgba(201, 168, 76, 0.03) 0%, transparent 60%),
-        linear-gradient(135deg, #080808 0%, #0f0f0f 100%);
+    background:
+        linear-gradient(to right, rgba(12, 12, 12, 1) 15%, rgba(12, 12, 12, 0.4) 60%, rgba(12, 12, 12, 0.8) 100%),
+        linear-gradient(rgba(12, 12, 12, 0.2), rgba(12, 12, 12, 0.6)),
+        url('portrait.jpg');
+    background-size: cover;
+    background-position: center 20%;
+    filter: grayscale(40%) contrast(1.1) brightness(0.9);
 }
 
 .hero-bg::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(201, 168, 76, 0.02) 50px),
-        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(201, 168, 76, 0.02) 50px);
+    background: repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(201, 168, 76, 0.01) 50px),
+        repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(201, 168, 76, 0.01) 50px);
+    opacity: 0.5;
 }
+
 
 .hero-content {
     position: relative;
@@ -299,10 +314,11 @@ body {
 .hero-title {
     font-family: var(--font-serif);
     font-size: clamp(3rem, 6vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    margin-bottom: 1.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
     color: var(--text);
+    letter-spacing: -0.02em;
 }
 
 .hero-roles {

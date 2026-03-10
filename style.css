@@ -781,10 +781,14 @@ body {
 
 .port-food1 {
     background-image: url('assets/images/bourbon_cafe.png');
+    background-size: contain;
+    background-color: var(--surface);
 }
 
 .port-food2 {
     background-image: url('assets/images/bourbon_cafe.avif');
+    background-size: contain;
+    background-color: var(--surface);
 }
 
 .port-product {
@@ -801,6 +805,8 @@ body {
 
 .port-video {
     background-image: url('assets/images/port_video.png');
+    background-size: contain;
+    background-color: var(--surface);
 }
 
 .port-portrait {

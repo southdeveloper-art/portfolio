@@ -44,6 +44,7 @@ const typingEls = document.querySelectorAll('.type-text');
 
 function animateTyping(el) {
     const originalHTML = el.innerHTML;
+    // Get all top-level nodes (text and elements)
     const nodes = Array.from(el.childNodes);
     el.innerHTML = '';
     el.style.opacity = '1';
@@ -56,6 +57,7 @@ function animateTyping(el) {
         if (currentNodeIdx < nodes.length) {
             const node = nodes[currentNodeIdx];
 
+            // 1. Handle Text Nodes
             if (node.nodeType === Node.TEXT_NODE) {
                 if (currentCharIdx < node.textContent.length) {
                     el.appendChild(document.createTextNode(node.textContent[currentCharIdx]));
@@ -66,18 +68,20 @@ function animateTyping(el) {
                     currentCharIdx = 0;
                     type();
                 }
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                let currentSpan = el.querySelector(`[data-typing-id="${currentNodeIdx}"]`);
-                if (!currentSpan) {
-                    currentSpan = node.cloneNode(true);
-                    currentSpan.innerHTML = '';
-                    currentSpan.setAttribute('data-typing-id', currentNodeIdx);
-                    el.appendChild(currentSpan);
+            }
+            // 2. Handle Element Nodes (span, em, etc.)
+            else if (node.nodeType === Node.ELEMENT_NODE) {
+                // Find or create the corresponding wrapper in the live element
+                let currentWrapper = el.querySelector(`[data-node-id="${currentNodeIdx}"]`);
+                if (!currentWrapper) {
+                    currentWrapper = node.cloneNode(false); // Clone node without children
+                    currentWrapper.setAttribute('data-node-id', currentNodeIdx);
+                    el.appendChild(currentWrapper);
                 }
 
-                const nodeText = node.innerText;
+                const nodeText = node.textContent; // Text inside the span/em
                 if (currentCharIdx < nodeText.length) {
-                    currentSpan.textContent += nodeText[currentCharIdx];
+                    currentWrapper.textContent += nodeText[currentCharIdx];
                     currentCharIdx++;
                     setTimeout(type, speed);
                 } else {
@@ -86,11 +90,12 @@ function animateTyping(el) {
                     type();
                 }
             } else {
-                // Skip other types like comments
+                // Skip other node types
                 currentNodeIdx++;
                 type();
             }
         } else {
+            // Final restore to ensure all attributes and structure are perfect
             el.innerHTML = originalHTML;
             el.classList.add('typing-done');
         }

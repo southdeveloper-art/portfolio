@@ -37,6 +37,35 @@
     color: var(--text);
 }
 
+/* ── Typing Effect ── */
+.type-text {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.type-text.typing-started {
+    position: relative;
+}
+
+.type-text.typing-started:not(.typing-done)::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+    color: var(--gold);
+    margin-left: 2px;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 html {
     scroll-behavior: smooth;
 }

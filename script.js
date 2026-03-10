@@ -39,6 +39,49 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealEls.forEach(el => revealObserver.observe(el));
 
+// ── Typing Effect on Scroll ──
+const typingEls = document.querySelectorAll('.type-text');
+
+function animateTyping(el) {
+    const originalHTML = el.innerHTML;
+    const text = el.innerText;
+    el.innerHTML = '';
+    el.style.opacity = '1';
+
+    let charIdx = 0;
+    const speed = 35; // ms per character
+
+    function type() {
+        if (charIdx < text.length) {
+            // Simplified for now: just text. If tags are needed, 
+            // a more complex character wrapper approach is better.
+            // For the user's sleek headers, we'll use character-by-character reveal
+            el.textContent += text[charIdx];
+            charIdx++;
+            setTimeout(type, speed);
+        } else {
+            // Restore original HTML for styling (gold, italics etc) once typed
+            el.innerHTML = originalHTML;
+            el.classList.add('typing-done');
+        }
+    }
+    type();
+}
+
+const typingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('typing-started')) {
+            entry.target.classList.add('typing-started');
+            animateTyping(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+typingEls.forEach(el => {
+    el.style.opacity = '0'; // Hide initially
+    typingObserver.observe(el);
+});
+
 // ── Portfolio Filter ──
 const filterBtns = document.querySelectorAll('.filter-btn');
 const portfolioItems = document.querySelectorAll('.portfolio-item');

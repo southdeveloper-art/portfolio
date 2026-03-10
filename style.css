@@ -243,7 +243,8 @@ body {
     transition: color .3s;
 }
 
-.mobile-menu a:hover {
+.mobile-menu a:hover,
+.mobile-menu a.nav-active {
     color: var(--gold);
 }
 
@@ -1690,9 +1691,8 @@ footer p {
         padding-top: 4rem;
     }
 
-    .portrait-wrapper {
-        width: 280px;
-        height: 380px;
+    .hero-content {
+        padding-top: 4rem;
     }
 
     .footer-signature {

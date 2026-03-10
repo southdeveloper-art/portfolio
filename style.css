@@ -798,6 +798,7 @@ body {
     padding: 1px;
     background: linear-gradient(135deg, rgba(201, 168, 76, 0.4), transparent 50%, rgba(201, 168, 76, 0.1));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -839,6 +840,7 @@ body {
     margin-bottom: .8rem;
     background: linear-gradient(to right, #fff, var(--gold-light));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -974,6 +976,7 @@ body {
     padding: 1px;
     background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), transparent 40%, rgba(201, 168, 76, 0.05));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -1028,6 +1031,7 @@ body {
     font-size: 1.6rem;
     background: linear-gradient(to right, #fff, var(--gold-light));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -1219,6 +1223,7 @@ body {
     outline: none;
     transition: border-color .3s;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .form-group select {

@@ -6,8 +6,16 @@
 
 // ── Navbar scroll effect ──
 const navbar = document.getElementById('navbar');
+const scrollProgress = document.querySelector('.scroll-progress');
+
 window.addEventListener('scroll', () => {
+    // Navbar background
     navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+    // Scroll progress bar
+    const totalHeight = document.body.scrollHeight - window.innerHeight;
+    const progress = (window.scrollY / totalHeight) * 100;
+    if (scrollProgress) scrollProgress.style.width = progress + '%';
 }, { passive: true });
 
 // ── Mobile Menu ──
@@ -363,4 +371,37 @@ if (lightbox && lightboxImg) {
         if (e.key === 'Escape' && lightbox.classList.contains('open')) closeBox();
     });
 }
+
+// ── Magnetic Buttons (Premium feel) ──
+const magneticBtns = document.querySelectorAll('.btn-gold, .btn-outline, .cta-nav');
+magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.25}px)`;
+        btn.style.transition = 'transform 0.1s ease-out';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = 'translate(0, 0)';
+        btn.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+    });
+});
+
+// ── Back to Top ──
+const backToTopBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+    if (backToTopBtn) {
+        backToTopBtn.classList.toggle('show', window.scrollY > 500);
+    }
+});
+
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
 

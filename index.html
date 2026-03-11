@@ -13,9 +13,16 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Satisfy&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vignesh Chandrashekar — Photographer · Videographer" />
+    <meta property="og:description"
+        content="Cinematic photographer, videographer, and content strategist based in Bangalore & Hyderabad." />
+    <meta property="og:image" content="portrait.jpg" />
 </head>
 
-<body>
+<body class="page-fade-in">
+    <div class="scroll-progress"></div>
     <div class="grain"></div>
 
     <nav id="navbar">
@@ -59,12 +66,9 @@
                     <span>Video Editor</span><span class="dot">·</span>
                     <span>Content Strategist</span>
                 </p>
-                <p class="hero-bio reveal">A passionate creative whose journey began in 2022 — shaping raw clips into
-                    powerful moments, building digital identities, and telling stories through motion, strategy, and
-                    light.</p>
                 <div class="hero-ctas reveal">
                     <a href="portfolio.html" class="btn btn-gold">View Portfolio</a>
-                    <a href="contact.html" class="btn btn-outline">Work With Me</a>
+                    <a href="contact.html" class="btn btn-outline">Let's Work</a>
                 </div>
             </div>
             <div class="hero-portrait reveal">
@@ -73,8 +77,85 @@
                     <img src="portrait.jpg" alt="Vignesh Chandrashekar" class="portrait-image">
                     <div class="portrait-fallback" id="portraitFallback"><span class="monogram">VC</span></div>
                 </div>
-                <div class="portrait-label"><span class="gold">Vignesh Chandrashekar</span><span>— Creative
-                        Professional</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED WORK TEASER -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Portfolio</span>
+                <h2 class="section-title">Featured <em class="gold-italic">Work</em></h2>
+                <p class="section-sub">A glimpse into visual storytelling and cinematic captures.</p>
+            </div>
+            <div class="featured-grid reveal">
+                <div class="featured-item port-12">
+                    <div class="featured-overlay">
+                        <h4>Fashion Editorial</h4><span>Style Study</span>
+                    </div>
+                </div>
+                <div class="featured-item port-20">
+                    <div class="featured-overlay">
+                        <h4>Product Portrait</h4><span>Clean Capture</span>
+                    </div>
+                </div>
+                <div class="featured-item port-26">
+                    <div class="featured-overlay">
+                        <h4>Bourbon Cafe</h4><span>Interior Design</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section-footer reveal" style="text-align:center; margin-top:3rem;">
+                <a href="portfolio.html" class="btn btn-outline">Explore Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES PREVIEW -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">Expertise</span>
+                <h2 class="section-title">Creative <em class="gold-italic">Solutions</em></h2>
+            </div>
+            <div class="services-preview-grid">
+                <div class="s-preview-card reveal">
+                    <div class="s-preview-icon">📷</div>
+                    <h3>Photography</h3>
+                    <p>Fashion, Interior, Food & Nature shots with professional retouching.</p>
+                </div>
+                <div class="s-preview-card reveal">
+                    <div class="s-preview-icon">🎬</div>
+                    <h3>Video Editing</h3>
+                    <p>Cinematic post-production, color grading, and social optimization.</p>
+                </div>
+                <div class="s-preview-card reveal">
+                    <div class="s-preview-icon">📱</div>
+                    <h3>Strategy</h3>
+                    <p>Building digital identities and managing content for creators.</p>
+                </div>
+            </div>
+            <div class="section-footer reveal" style="text-align:center; margin-top:3rem;">
+                <a href="services.html" class="btn btn-gold">All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT TEASER -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="about-teaser reveal">
+                <div class="teaser-text">
+                    <span class="section-tag">Identity</span>
+                    <h2 class="section-title">The Story <em class="gold-italic">Behind</em> the Lens</h2>
+                    <p>My journey began in 2022 as a video editor, shaping raw clips into powerful moments. Today, I
+                        combine strategy with cinematic visuals to help brands and creators stand out.</p>
+                    <a href="about.html" class="btn btn-outline">Read Full Story</a>
+                </div>
+                <div class="teaser-visual">
+                    <div class="brand-monogram">VC</div>
+                </div>
             </div>
         </div>
     </section>
@@ -87,6 +168,7 @@
         </div>
     </footer>
 
+    <div class="back-to-top" id="backToTop">↑</div>
     <script src="script.js"></script>
 </body>
 

@@ -15,18 +15,19 @@ const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 const closeMenu = document.getElementById('closeMenu');
 
-hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
-closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
-document.querySelectorAll('.mmlink').forEach(link => {
-    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-});
+if (hamburger && mobileMenu && closeMenu) {
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    document.querySelectorAll('.mmlink').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+}
 
 // ── Scroll Reveal ──
 const revealEls = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-            // Stagger reveals
             const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
             const idx = siblings.indexOf(entry.target);
             setTimeout(() => {
@@ -44,7 +45,6 @@ const typingEls = document.querySelectorAll('.type-text');
 
 function animateTyping(el) {
     const originalHTML = el.innerHTML;
-    // Get all top-level nodes (text and elements)
     const nodes = Array.from(el.childNodes);
     el.innerHTML = '';
     el.style.opacity = '1';
@@ -56,8 +56,6 @@ function animateTyping(el) {
     function type() {
         if (currentNodeIdx < nodes.length) {
             const node = nodes[currentNodeIdx];
-
-            // 1. Handle Text Nodes
             if (node.nodeType === Node.TEXT_NODE) {
                 if (currentCharIdx < node.textContent.length) {
                     el.appendChild(document.createTextNode(node.textContent[currentCharIdx]));
@@ -68,18 +66,14 @@ function animateTyping(el) {
                     currentCharIdx = 0;
                     type();
                 }
-            }
-            // 2. Handle Element Nodes (span, em, etc.)
-            else if (node.nodeType === Node.ELEMENT_NODE) {
-                // Find or create the corresponding wrapper in the live element
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
                 let currentWrapper = el.querySelector(`[data-node-id="${currentNodeIdx}"]`);
                 if (!currentWrapper) {
-                    currentWrapper = node.cloneNode(false); // Clone node without children
+                    currentWrapper = node.cloneNode(false);
                     currentWrapper.setAttribute('data-node-id', currentNodeIdx);
                     el.appendChild(currentWrapper);
                 }
-
-                const nodeText = node.textContent; // Text inside the span/em
+                const nodeText = node.textContent;
                 if (currentCharIdx < nodeText.length) {
                     currentWrapper.textContent += nodeText[currentCharIdx];
                     currentCharIdx++;
@@ -90,19 +84,16 @@ function animateTyping(el) {
                     type();
                 }
             } else {
-                // Skip other node types
                 currentNodeIdx++;
                 type();
             }
         } else {
-            // Final restore to ensure all attributes and structure are perfect
             el.innerHTML = originalHTML;
             el.classList.add('typing-done');
         }
     }
     type();
 }
-
 
 const typingObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -114,32 +105,68 @@ const typingObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 typingEls.forEach(el => {
-    el.style.opacity = '0'; // Hide initially
+    el.style.opacity = '0';
     typingObserver.observe(el);
 });
 
 // ── Portfolio Filter ──
 const filterBtns = document.querySelectorAll('.filter-btn');
 const portfolioItems = document.querySelectorAll('.portfolio-item');
+const portfolioGrid = document.getElementById('portfolioGrid');
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Update active button
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+if (filterBtns.length > 0) {
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        const filter = btn.dataset.filter;
+            const filter = btn.dataset.filter;
+            let visibleCount = 0;
 
-        portfolioItems.forEach(item => {
-            if (filter === 'all' || item.dataset.category === filter) {
-                item.style.display = '';
-                item.style.animation = 'fadeIn .4s ease forwards';
-            } else {
-                item.style.display = 'none';
+            portfolioItems.forEach((item) => {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.style.display = 'inline-block';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px) scale(0.98)';
+
+                    const currentCount = visibleCount;
+                    setTimeout(() => {
+                        item.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${currentCount * 0.05}s, 
+                                                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${currentCount * 0.05}s`;
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                    }, 10);
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px) scale(0.98)';
+                    item.style.transition = 'none';
+                }
+            });
+
+            // Adjust grid columns for visual balance
+            if (portfolioGrid) {
+                const isMobile = window.innerWidth <= 480;
+                const isTablet = window.innerWidth <= 768;
+
+                if (isMobile) {
+                    portfolioGrid.style.columnCount = '1';
+                } else if (isTablet) {
+                    portfolioGrid.style.columnCount = visibleCount > 0 ? '2' : '1';
+                } else {
+                    if (visibleCount > 0 && visibleCount <= 4) {
+                        portfolioGrid.style.columnCount = '2';
+                    } else if (visibleCount === 0) {
+                        portfolioGrid.style.columnCount = '1';
+                    } else {
+                        portfolioGrid.style.columnCount = '3';
+                    }
+                }
             }
         });
     });
-});
+}
 
 // ── Parallax Hero (subtle) ──
 const heroBg = document.querySelector('.hero-bg');
@@ -159,7 +186,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const id = entry.target.id;
             navLinks.forEach(link => {
-                link.classList.toggle('active-link', link.getAttribute('href') === `#${id}`);
+                link.classList.toggle('active-link', link.getAttribute('href').includes(id));
             });
         }
     });
@@ -167,25 +194,14 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach(s => sectionObserver.observe(s));
 
-// Add active link style dynamically
-const style = document.createElement('style');
-style.textContent = `.nav-links a.active-link, .mmlink.active-link { color: var(--gold) !important; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }`;
-document.head.appendChild(style);
-
 // ── Contact Form ──
-let hasSubmitted = false;
 const form = document.getElementById('contactForm');
-
 if (form) {
+    let hasSubmitted = false;
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-
-        if (hasSubmitted) return; // Prevent double trigger
-
+        if (hasSubmitted) return;
         const btn = form.querySelector('button[type="submit"]');
-
-        // Collect data
         const entry = {
             id: Date.now(),
             name: document.getElementById('f-name')?.value || '',
@@ -194,30 +210,14 @@ if (form) {
             message: document.getElementById('f-msg')?.value || '',
             time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
         };
-
-        // Save to localStorage
         const existing = JSON.parse(localStorage.getItem('vc_submissions') || '[]');
-        existing.unshift(entry); // newest first
+        existing.unshift(entry);
         localStorage.setItem('vc_submissions', JSON.stringify(existing));
-
         hasSubmitted = true;
-
-        // Visual feedback
         btn.textContent = '✓ Message Sent!';
         btn.style.background = 'linear-gradient(135deg, #2d6a2d, #4a9a4a)';
         btn.style.color = '#fff';
-
-        // Disable form fields
         Array.from(form.elements).forEach(el => el.disabled = true);
-
-        setTimeout(() => {
-            btn.textContent = 'Reload page to send another';
-            btn.style.background = 'transparent';
-            btn.style.border = '1px solid rgba(255,255,255,0.15)';
-            btn.style.color = 'var(--text-dim)';
-            btn.style.cursor = 'not-allowed';
-            btn.disabled = true;
-        }, 3000);
     });
 }
 
@@ -236,11 +236,6 @@ if (window.matchMedia('(hover: hover)').matches) {
         glow.style.top = e.clientY + 'px';
     });
 }
-
-// ── Portfolio item hover cursor ──
-portfolioItems.forEach(item => {
-    item.style.cursor = 'pointer';
-});
 
 // ── Smooth number animation for case stats ──
 function animateValue(el, start, end, duration) {
@@ -282,59 +277,90 @@ if (collabModal) {
     const mType = document.getElementById('m-type');
     let mHasSubmitted = false;
 
-    // Open Modal
     document.querySelectorAll('.btn-collab').forEach(btn => {
         btn.addEventListener('click', () => {
             const service = btn.getAttribute('data-service');
-            if (service && mType) {
-                mType.value = service;
-            }
+            if (service && mType) mType.value = service;
             collabModal.classList.add('open');
         });
     });
 
-    // Close Modal
     const closeModal = () => { collabModal.classList.remove('open'); };
-    closeBtn.addEventListener('click', closeModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
     collabModal.addEventListener('click', (e) => {
         if (e.target === collabModal) closeModal();
     });
 
-    // Handle Form Submission
-    mForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    if (mForm) {
+        mForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (mHasSubmitted) return;
+            const btnSubmit = mForm.querySelector('button[type="submit"]');
+            const entry = {
+                id: Date.now(),
+                name: document.getElementById('m-name')?.value || '',
+                email: document.getElementById('m-email')?.value || '',
+                project: document.getElementById('m-type')?.value || '',
+                message: document.getElementById('m-msg')?.value || '',
+                time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+            };
+            const existing = JSON.parse(localStorage.getItem('vc_submissions') || '[]');
+            existing.unshift(entry);
+            localStorage.setItem('vc_submissions', JSON.stringify(existing));
+            mHasSubmitted = true;
+            btnSubmit.textContent = '✓ Message Sent!';
+            btnSubmit.style.background = 'linear-gradient(135deg, #2d6a2d, #4a9a4a)';
+            btnSubmit.style.color = '#fff';
+            Array.from(mForm.elements).forEach(el => el.disabled = true);
+        });
+    }
+}
 
-        if (mHasSubmitted) return;
-        const btnSubmit = mForm.querySelector('button[type="submit"]');
+// ── Image Lightbox ──
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const closeLightbox = document.getElementById('closeLightbox');
 
-        const entry = {
-            id: Date.now(),
-            name: document.getElementById('m-name')?.value || '',
-            email: document.getElementById('m-email')?.value || '',
-            project: document.getElementById('m-type')?.value || '',
-            message: document.getElementById('m-msg')?.value || '',
-            time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
-        };
+if (lightbox && lightboxImg) {
+    portfolioItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const imgDiv = item.querySelector('.portfolio-img');
+            const overlay = item.querySelector('.portfolio-overlay');
 
-        const existing = JSON.parse(localStorage.getItem('vc_submissions') || '[]');
-        existing.unshift(entry);
-        localStorage.setItem('vc_submissions', JSON.stringify(existing));
+            if (imgDiv) {
+                // Extract URL from background-image: url("...")
+                const bgImg = window.getComputedStyle(imgDiv).backgroundImage;
+                const url = bgImg.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
 
-        mHasSubmitted = true;
+                lightboxImg.src = url;
 
-        btnSubmit.textContent = '✓ Message Sent!';
-        btnSubmit.style.background = 'linear-gradient(135deg, #2d6a2d, #4a9a4a)';
-        btnSubmit.style.color = '#fff';
+                // Set caption from overlay text
+                if (overlay && lightboxCaption) {
+                    const title = overlay.querySelector('h4')?.textContent || '';
+                    const sub = overlay.querySelector('span')?.textContent || '';
+                    lightboxCaption.innerHTML = `${title} <br> <small style="font-size:0.8rem; opacity:0.7; font-family:'Inter', sans-serif;">${sub}</small>`;
+                }
 
-        Array.from(mForm.elements).forEach(el => el.disabled = true);
+                lightbox.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scroll
+            }
+        });
+    });
 
-        setTimeout(() => {
-            btnSubmit.textContent = 'Reload page to send another';
-            btnSubmit.style.background = 'transparent';
-            btnSubmit.style.border = '1px solid rgba(255,255,255,0.15)';
-            btnSubmit.style.color = 'var(--text-dim)';
-            btnSubmit.style.cursor = 'not-allowed';
-            btnSubmit.disabled = true;
-        }, 3000);
+    const closeBox = () => {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    if (closeLightbox) closeLightbox.addEventListener('click', closeBox);
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeBox();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('open')) closeBox();
     });
 }
+
